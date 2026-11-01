@@ -217,7 +217,7 @@ python3 jwt_tool.py <TOKEN> -C -d rockyou.txt
 拿到题目，依旧尝试常见密码 admin/123456 登录成功
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](https://github.com/user-attachments/assets/80bb8b8c-cf8d-4405-b167-ed450350845c?x-oss-process=image%2Fformat%2Cwebp)
+![](https://github.com/user-attachments/assets/80bb8b8c-cf8d-4405-b167-ed450350845c)
 
 dirsearch 扫描没有发现现成的字典，则使用1–4 位小写字母+数字穷举法，成功命中xkcv
 
