@@ -641,7 +641,7 @@ phpinfo();
 > RCE（Remote Code Execution，远程代码执行）是指攻击者能够在目标服务器上执行任意代码的一种高危安全漏洞，结合linux基础指令，简单来说就是在对方电脑上拿到权限、执行这些指令。
 >
 
-> <img src="https://github.com/user-attachments/assets/a4d57432-a231-49ff-a702-337d0459f0c4" width="630.9090544435296" title="" crop="0,0,1,1" id="u0dce886a" class="ne-image">
+> ![](https://github.com/user-attachments/assets/a4d57432-a231-49ff-a702-337d0459f0c4)
 >
 > + 命令执行函数具体介绍：
 >
@@ -675,7 +675,7 @@ proc_open();参数更多，更为复杂
 > 例如：
 >
 
-> <img src="https://github.com/user-attachments/assets/87cbbaa1-c043-4508-8859-db7d218e6780" width="1196.3635672156845" title="" crop="0,0,1,1" id="u4910cc86" class="ne-image">
+> ![](https://github.com/user-attachments/assets/87cbbaa1-c043-4508-8859-db7d218e6780)
 >
 
 
@@ -683,11 +683,11 @@ proc_open();参数更多，更为复杂
 ### RCE-labs-1思路
 提示POST传参，抓包添加表单类型
 
-<img src="https://github.com/user-attachments/assets/2c1ae6d7-6b49-4d5e-bd9e-0c355e933de0" width="1096.3635729955283" title="" crop="0,0,1,1" id="u5b80c5ed" class="ne-image">
+![](https://github.com/user-attachments/assets/2c1ae6d7-6b49-4d5e-bd9e-0c355e933de0)
 
 a=system('ls /')看到根目录下有一个flag文件，传入参数a，当作PHP代码执行，拿到flag
 
-<img src="https://github.com/user-attachments/assets/5af8e9c5-6513-4403-84bd-4c3b82f45b5d" width="1179.9999317978406" title="" crop="0,0,1,1" id="ua82b7079" class="ne-image">
+![](https://github.com/user-attachments/assets/5af8e9c5-6513-4403-84bd-4c3b82f45b5d)
 
 ### 总结
 ```php
@@ -708,15 +708,15 @@ a=echo getenv("PATH"); // 查看环境变量
 ### RCE-labs-3思路
 提示POST传参，抓包添加表单类型
 
-<img src="https://github.com/user-attachments/assets/ff86cd1a-5957-4810-b398-350c3f95d8c4" width="1103.6362998479035" title="" crop="0,0,1,1" id="uaa4c2eaa" class="ne-image">
+![](https://github.com/user-attachments/assets/ff86cd1a-5957-4810-b398-350c3f95d8c4)
 
 ls当前文件只有index.php,用ls /查看根目录文件，发现flag文件
 
-<img src="https://github.com/user-attachments/assets/e0a24bd0-7b5e-47a4-86f4-f79519963a23" width="1439.9999167702463" title="" crop="0,0,1,1" id="u5b836779" class="ne-image">
+![](https://github.com/user-attachments/assets/e0a24bd0-7b5e-47a4-86f4-f79519963a23)
 
 传入参数a，当作Linux命令执行，拿到flag
 
-<img src="https://github.com/user-attachments/assets/5e6e9c07-2110-4f02-9c1f-3ccaf4c1379c" width="1109.0908449871847" title="" crop="0,0,1,1" id="u822ee00e" class="ne-image">
+![](https://github.com/user-attachments/assets/5e6e9c07-2110-4f02-9c1f-3ccaf4c1379c)
 
 ### 总结
 ```php
