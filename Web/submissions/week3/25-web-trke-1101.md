@@ -9,22 +9,22 @@
 使用 dirsearch 工具扫描未发现隐藏文件，故尝试 BP 抓包爆破
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-01.png)
+![](https://github.com/user-attachments/assets/a6673140-df5f-4cfc-8bd0-ba0bf196aa14)
 
 抓包发送到 intruder 尝试爆破密码
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-02.png)
+![](https://github.com/user-attachments/assets/9dd9d8a0-2033-4757-859e-a46e37e31f0d)
 
 提示弱口令，则将 username 改为 admin ，对密码位置添加 pyload，并导入字典开始攻击
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-03.png)
+![](https://github.com/user-attachments/assets/d66fe2c6-d6de-4a03-a4c5-6f07901032f5)
 
 可见 password 处页面响应为 200 ，尝试登录，成功拿到 flag
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-04.png)
+![](https://github.com/user-attachments/assets/019a6221-2654-42cf-885a-5e128e184a3f)
 
 ### 总结
 + 学会使用 dirsearch 扫描，比如命令：dirsearch -u 网址 ，curl 网址 -O（保存隐藏文件/在浏览器直接访问也可以）
@@ -38,47 +38,47 @@
 打开靶机，发现是一个登录框，看源码未发现提示，尝试dirsearch扫描
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-05.png)
+![](https://github.com/user-attachments/assets/fa3cdf56-67e7-44ea-96e0-8d9cac48b8f6)
 
 用dirsearch扫描，发现一份压缩文件，下载解压发现是一份密码字典, 尝试爆破
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-06.png)
+![](https://github.com/user-attachments/assets/f4408c38-03fa-4b27-b48b-353aeba726ed)
 
 抓包发送到intruder，添加pyload，导入hello.txt，开始攻击
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-07.png)
+![](https://github.com/user-attachments/assets/7cc806a9-ec78-4e77-9890-c506fd6448e1)
 
 按状态码排序，发现输入正确账密后重定向
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-08.png)
+![](https://github.com/user-attachments/assets/5da1a0dc-365b-4245-9bb3-f22742edbaca)
 
 发包发现网页返回源码提示，再次抓包发送到repeater
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-09.png)
+![](https://github.com/user-attachments/assets/750b82d9-485e-4b76-b0fe-081f8639b91d)
 
 发现题目可细分为三个部分，解决部分1-GET传参，发现intval是截断函数，读到第一个不为数字的参数就截断，同时又不能等于114514，故可传入 &cat=114514a 等触发截断的值
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-10.png)
+![](https://github.com/user-attachments/assets/b7309a73-96fc-4a47-bec6-b1ba2c974447)
 
 解决部分2-GET传参，根据页面最顶提示，对rimuru进行base64编码，发现为cmltdXJ1，刚好满足$pt的substr截取规则，又有file_get_contents函数对内容判断，可以用data伪协议绕过，构造text/plain：&Slime=data://text/plain;base64,cmltdXJ1,成功完成绕过
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-11.png)
+![](https://github.com/user-attachments/assets/c951b124-428a-43d2-80e8-6ae605acc6ba)
 
 解决部分3-POST传参，改GET为POST，添加POST请求传参方式：Content-Type: application/x-www-form-urlencoded，发现参数名为NSS_CTF.LOVE,PHP后端会自动将特殊字符转为_（参数名污染），故变形为：NSS[CTF.LOVE，使其识别为数组得以保留“.”,构造无参数rce绕过正则匹配：NSS[CTF.LOVE=<font style="color:rgb(48, 49, 51);">eval(end(current(get_defined_vars())));末尾传入参数对应系统命令实现远程代码执行</font>
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-12.png)
+![](https://github.com/user-attachments/assets/6f4bd396-bfc5-4c48-a687-f9868de22e05)
 
 <font style="color:rgb(48, 49, 51);">检查这些文件发现没有flag ，检查环境变量：a=system('env')无结果,尝试查看/flag，成功拿到flag</font>
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-13.png)
+![](https://github.com/user-attachments/assets/8e4def42-e2fe-40c2-80b9-769b4c3431a7)
 
 ### 总结
 + php中intval()函数有数字截断的效果，读到第一个不是数字的字符时截断。
@@ -121,22 +121,22 @@
 
 ### 敏感信息泄露思路
 拿到题目，尝试常见密码 admin/123456 登录成功<!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-14.png)
+![](https://github.com/user-attachments/assets/838f1537-c704-4868-b9a5-3b548ffc7dee)
 
 打开 BP 抓包，查看 Token 中是否有敏感信息
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-15.png)
+![](https://github.com/user-attachments/assets/8b2f5146-93ab-4565-a4b7-3bea2e6054d6)
 
 复制 Token 使用 jwt_tool 工具对其进行扫描解密
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-16.png)
+![](https://github.com/user-attachments/assets/4b8e460c-ee1f-4e4f-acd5-259b5a1dd178)
 
 可见 "FL  " 和 "AG" 字样，拼起来成功拿到 FLAG
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-17.png)
+![](https://github.com/user-attachments/assets/cdc3afdf-dccc-4fff-9ce5-370dd10ad98f)
 
 ### 总结
 1. 理解 JWT 的作用和构成：
@@ -176,7 +176,7 @@ python3 jwt_tool.py <TOKEN> -C -d rockyou.txt
 ```
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-18.png)
+![](https://github.com/user-attachments/assets/86c9f0ba-9d20-489b-ad10-1432c702c8bf)
 
 
 
@@ -184,27 +184,27 @@ python3 jwt_tool.py <TOKEN> -C -d rockyou.txt
 
 ### 无签名思路
 拿到题目，依旧尝试常见密码 admin/123456 登录成功<!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-14.png)
+![](https://github.com/user-attachments/assets/838f1537-c704-4868-b9a5-3b548ffc7dee)
 
 提示需要管理员身份才能拿到 flag，果断抓包拿 Token
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-19.png)
+![](https://github.com/user-attachments/assets/80bb8b8c-cf8d-4405-b167-ed450350845c)
 
 -T 可视化修改 alg 为 none，修改 role 为 admin ，绕过验证
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-20.png)
+![](https://github.com/user-attachments/assets/4cd12a58-fa39-4bbe-ae51-706d3aadb019)
 
 改完后得到新 Token ，接着手动去除签名
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-21.png)
+![](https://github.com/user-attachments/assets/69ef04b0-1269-4411-a805-4bf1e37dc15c)
 
 改 Token 发包得到 flag
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-22.png)
+![](https://github.com/user-attachments/assets/3fbae9f8-4679-4efb-a191-2a4c584b4c2f)
 
 ### 总结
 学会 JWT_tool 的可视化命令，以及分析问题的能力
@@ -217,17 +217,17 @@ python3 jwt_tool.py <TOKEN> -C -d rockyou.txt
 拿到题目，依旧尝试常见密码 admin/123456 登录成功
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-19.png?x-oss-process=image%2Fformat%2Cwebp)
+![](https://github.com/user-attachments/assets/80bb8b8c-cf8d-4405-b167-ed450350845c?x-oss-process=image%2Fformat%2Cwebp)
 
 dirsearch 扫描没有发现现成的字典，则使用1–4 位小写字母+数字穷举法，成功命中xkcv
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-24.png)
+![](https://github.com/user-attachments/assets/96cd7d76-8a44-4a57-8a3c-e9ba2a0777ba)
 
 接着改 role: admin，用 xkcv 重签 HMAC-SHA256，更新 Token，成功拿到 flag
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-25.png)
+![](https://github.com/user-attachments/assets/b573ed48-b36b-4952-ad2e-ec612037f976)
 
 ### 总结
 熟练使用 jwt_tool，理解各个命令的含义
@@ -263,22 +263,22 @@ dirsearch 扫描没有发现现成的字典，则使用1–4 位小写字母+数
 打开靶机，发现公钥获取人口：publickey.pem和登录框
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-26.png)
+![](https://github.com/user-attachments/assets/37d5bca7-d622-401a-8cca-4cd00a9145d2)
 
 打开publickey.pem，获取公钥，抓包查看Token
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-27.png)
+![](https://github.com/user-attachments/assets/d426c65d-3a04-47b4-9084-0f3c3876a87b)
 
 使用 jwt_tool 进行查看并改“RS256”为"HS256"，改role为“admin”进行绕过
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-28.png)
+![](https://github.com/user-attachments/assets/50386b23-8c9d-476f-af3d-f4b4a3aa0be3)
 
 绕过后利用手写的解密公钥的py脚本进行Token生成，尝试不同版本并替换
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-29.png)
+![](https://github.com/user-attachments/assets/d616cb54-68a7-4fad-a91d-a3e0ffe13066)
 
 使用脚本命令：python jwt_alg_confusion.py
 
@@ -334,7 +334,7 @@ for label, secret in candidates:
 替换Token，成功拿到 flag
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-30.png)
+![](https://github.com/user-attachments/assets/73956f3c-52e9-43fb-a16e-144ad6e03d36)
 
 ### 总结
 学会查看源码并分析漏洞类型，准确解密公钥，混用 alg
@@ -356,7 +356,7 @@ for label, secret in candidates:
 >
 > ### <font style="color:rgb(34, 34, 38);">Session劫持</font>
 > <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-31.png)
+![](https://github.com/user-attachments/assets/e8935836-4c99-4193-a81a-29a926367b75)
 >
 > ### <font style="color:rgb(34, 34, 38);">Session固定攻击</font>
 > + **<font style="color:rgb(77, 77, 77);">原理：</font>**<font style="color:rgb(77, 77, 77);">强迫用户使用攻击者预设的Session ID</font>
@@ -396,7 +396,7 @@ for label, secret in candidates:
 打开文件夹右键进入 终端 开始使用
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-32.png)
+![](https://github.com/user-attachments/assets/281e4aac-2e85-4c63-9143-2d6e4dc7d46c)
 
 1. Git（<font style="color:rgb(77, 77, 77);">分布式版本控制系统</font>） 常见命令
 
@@ -449,26 +449,26 @@ python2 GitHack.py http://challenge-3af067339f2e185f.sandbox.ctfhub.com:10800/.g
 打开靶机，查看源码未发现线索
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-33.png)
+![](https://github.com/user-attachments/assets/61296608-8730-440e-a101-2a95b88503f3)
 
 尝试用 dirsearch 扫描，发现有可能存在 git 泄露
 
 `dirsearch -u http://challenge-7bf5220a30ea2ad3.sandbox.ctfhub.com:10800/`
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-34.png)
+![](https://github.com/user-attachments/assets/d1126d85-f20d-40ad-a6c9-a8099df0e0a6)
 
 尝试用 GitHack 进行源码抓取：
 
 `python2 GitHack.py http://challenge-7bf5220a30ea2ad3.sandbox.ctfhub.com:10800/.git`
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-35.png)
+![](https://github.com/user-attachments/assets/5e3cefc9-dc68-4dce-b12d-c2518fdd5a58)
 
 成功拿到源码，dist位置打开终端，使用`git log 与 git show `查看修改记录，发现 flag
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-36.png)
+![](https://github.com/user-attachments/assets/df063cce-52f3-4a16-a81e-372efed73deb)
 
 ### 总结
 学会用 Githack 抓取源码并用 git 命令查看修改记录
@@ -481,33 +481,33 @@ python2 GitHack.py http://challenge-3af067339f2e185f.sandbox.ctfhub.com:10800/.g
 打开靶机，查看源码未发现线索
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-37.png)
+![](https://github.com/user-attachments/assets/66ba2b76-b215-4ba3-ab83-2e6baa261805)
 
 尝试用 dirsearch 扫描，发现有可能存在 git 泄露
 
 `dirsearch -u http://challenge-68a44eb7223e5006.sandbox.ctfhub.com:10800/`
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-38.png)
+![](https://github.com/user-attachments/assets/683211bc-e4e5-4bfb-861a-d5b68ab989b0)
 
 使用 GitHack 获取源码
 
 python2 GitHack.py http://challenge-68a44eb7223e5006.sandbox.ctfhub.com:10800/.git
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-39.png)
+![](https://github.com/user-attachments/assets/807372e1-611c-4d6d-805d-38a3a0be84ce)
 
 执行 git log 或 git show 无内容，尝试从暂存区查看执行命令：
 
 git stash pop
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-40.png)
+![](https://github.com/user-attachments/assets/229af321-e687-445a-84d1-72c78a5c98c2)
 
 成功拿到一个 .txt 文件，返回 dist 目录查看，发现 flag 就藏在这里
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-41.png)
+![](https://github.com/user-attachments/assets/0eaa5d44-3a45-40ff-949a-5e3544f6ab92)
 
 ### 总结
 学会查看暂存区的文件，正确使用命令
@@ -519,7 +519,7 @@ git stash pop
 步骤同上，dirsearch 扫描，GitHack 抓取即可
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-42.png)
+![](https://github.com/user-attachments/assets/6ea032fe-141a-497d-b2bf-1ecfc14ecfbe)
 
 
 
@@ -555,7 +555,7 @@ GO 的 Gin 框架常见的路由：
 CVE-2021-43798 复现：
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](25-web-trke-1101-images/img-43.png)
+![](https://github.com/user-attachments/assets/e7cd276c-3f8f-4378-b6c0-a22e8733255f)
 
 # PHP语言的特性
 变量，比较，逻辑运算，输出
@@ -641,7 +641,7 @@ phpinfo();
 > RCE（Remote Code Execution，远程代码执行）是指攻击者能够在目标服务器上执行任意代码的一种高危安全漏洞，结合linux基础指令，简单来说就是在对方电脑上拿到权限、执行这些指令。
 >
 
-> <img src="25-web-trke-1101-images/img-44.png" width="630.9090544435296" title="" crop="0,0,1,1" id="u0dce886a" class="ne-image">
+> <img src="https://github.com/user-attachments/assets/a4d57432-a231-49ff-a702-337d0459f0c4" width="630.9090544435296" title="" crop="0,0,1,1" id="u0dce886a" class="ne-image">
 >
 > + 命令执行函数具体介绍：
 >
@@ -675,7 +675,7 @@ proc_open();参数更多，更为复杂
 > 例如：
 >
 
-> <img src="25-web-trke-1101-images/img-45.png" width="1196.3635672156845" title="" crop="0,0,1,1" id="u4910cc86" class="ne-image">
+> <img src="https://github.com/user-attachments/assets/87cbbaa1-c043-4508-8859-db7d218e6780" width="1196.3635672156845" title="" crop="0,0,1,1" id="u4910cc86" class="ne-image">
 >
 
 
@@ -683,11 +683,11 @@ proc_open();参数更多，更为复杂
 ### RCE-labs-1思路
 提示POST传参，抓包添加表单类型
 
-<img src="25-web-trke-1101-images/img-46.png" width="1096.3635729955283" title="" crop="0,0,1,1" id="u5b80c5ed" class="ne-image">
+<img src="https://github.com/user-attachments/assets/2c1ae6d7-6b49-4d5e-bd9e-0c355e933de0" width="1096.3635729955283" title="" crop="0,0,1,1" id="u5b80c5ed" class="ne-image">
 
 a=system('ls /')看到根目录下有一个flag文件，传入参数a，当作PHP代码执行，拿到flag
 
-<img src="25-web-trke-1101-images/img-47.png" width="1179.9999317978406" title="" crop="0,0,1,1" id="ua82b7079" class="ne-image">
+<img src="https://github.com/user-attachments/assets/5af8e9c5-6513-4403-84bd-4c3b82f45b5d" width="1179.9999317978406" title="" crop="0,0,1,1" id="ua82b7079" class="ne-image">
 
 ### 总结
 ```php
@@ -708,15 +708,15 @@ a=echo getenv("PATH"); // 查看环境变量
 ### RCE-labs-3思路
 提示POST传参，抓包添加表单类型
 
-<img src="25-web-trke-1101-images/img-48.png" width="1103.6362998479035" title="" crop="0,0,1,1" id="uaa4c2eaa" class="ne-image">
+<img src="https://github.com/user-attachments/assets/ff86cd1a-5957-4810-b398-350c3f95d8c4" width="1103.6362998479035" title="" crop="0,0,1,1" id="uaa4c2eaa" class="ne-image">
 
 ls当前文件只有index.php,用ls /查看根目录文件，发现flag文件
 
-<img src="25-web-trke-1101-images/img-49.png" width="1439.9999167702463" title="" crop="0,0,1,1" id="u5b836779" class="ne-image">
+<img src="https://github.com/user-attachments/assets/e0a24bd0-7b5e-47a4-86f4-f79519963a23" width="1439.9999167702463" title="" crop="0,0,1,1" id="u5b836779" class="ne-image">
 
 传入参数a，当作Linux命令执行，拿到flag
 
-<img src="25-web-trke-1101-images/img-50.png" width="1109.0908449871847" title="" crop="0,0,1,1" id="u822ee00e" class="ne-image">
+<img src="https://github.com/user-attachments/assets/5e6e9c07-2110-4f02-9c1f-3ccaf4c1379c" width="1109.0908449871847" title="" crop="0,0,1,1" id="u822ee00e" class="ne-image">
 
 ### 总结
 ```php
